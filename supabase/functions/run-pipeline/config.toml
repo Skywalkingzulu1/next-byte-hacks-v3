@@ -1,0 +1,2 @@
+[functions.run-pipeline]
+verify_jwt = false

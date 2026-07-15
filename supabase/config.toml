@@ -1,0 +1,2 @@
+# Supabase project id (set after `supabase link`).
+project_id = "priorauthflow-nextbyte"

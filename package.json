@@ -1,0 +1,27 @@
+{
+  "name": "priorauthflow-nextbyte",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve public -l 4173",
+    "build": "esbuild src/pipeline/index.ts --bundle --format=iife --global-name=PriorAuthFlow --outfile=public/pipeline.js --platform=browser --target=es2020",
+    "build:edge": "esbuild src/pipeline/index.ts --bundle --format=esm --outfile=supabase/functions/run-pipeline/pipeline.bundle.mjs --platform=neutral --main-fields=module,main",
+    "test": "vitest run src/tests/pipeline.test.ts",
+    "test:e2e": "vitest run src/tests/e2e.test.ts",
+    "typecheck": "tsc --noEmit",
+    "pages": "npx serve public -l 4173"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "@types/node": "^26.1.1",
+    "esbuild": "^0.25.0",
+    "puppeteer": "^25.3.0",
+    "serve": "^14.2.6",
+    "vitest": "^4.1.10"
+  },
+  "allowScripts": {
+    "puppeteer@25.3.0": true,
+    "esbuild@0.25.12": true
+  }
+}
