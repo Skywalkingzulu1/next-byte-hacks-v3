@@ -28,8 +28,8 @@ serverless edge function when Supabase secrets are set.
 ### Hour 0–2 (Now): Registration + Setup
 - [ ] Register at https://next-byte-hacks-v3.devpost.com/register
 - [ ] Create submission draft on Devpost
-- [ ] Verify GitHub repo is public: https://github.com/Skywalkingzulu1/priorauthflow-croo
-- [ ] Verify GitHub Pages is live: https://skywalkingzulu1.github.io/priorauthflow-croo/
+- [ ] Verify GitHub repo is public: https://github.com/Skywalkingzulu1/next-byte-hacks-v3
+- [ ] Verify GitHub Pages is live: https://skywalkingzulu1.github.io/next-byte-hacks-v3/
 
 ### Hour 2–6: Polish the Project
 **Must fix before submission:**

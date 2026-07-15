@@ -16,9 +16,25 @@ clinician review **before** submission (preventing the ~68% of denials caused by
 
 ```
 chart+code ─▶ Intake ─▶ Chart-Retriever ─▶ Criteria-Matcher ─▶ Evidence-Builder
-                 ─▶ [missing?] Escalation (human review)  [complete?] Submitter (ePA)
-                 ─▶ typed Deliverable (packet + traces)
+               ─▶ [missing?] Escalation (human review)  [complete?] Submitter (ePA)
+               ─▶ typed Deliverable (packet + traces)
 ```
+
+### Pipeline diagram
+
+```mermaid
+flowchart LR
+  A[Chart + CPT code] --> B(Intake)
+  B --> C(Chart-Retriever)
+  C --> D(Criteria-Matcher)
+  D --> E(Evidence-Builder)
+  E --> F{Escalation}
+  F -- missing data --> G[(Human review)]
+  F -- complete --> H(Submitter / ePA)
+  G -. blocks .-> H
+  C & D & E & F & H --> T[(Typed traces + PA packet)]
+```
+
 
 ## Local development
 
@@ -35,6 +51,7 @@ npm run test:e2e         # puppeteer end-to-end check (needs a browser)
 1. **GitHub Pages** (frontend): push to `main`; the `Deploy to GitHub Pages` workflow builds the
    bundle, injects `public/config.js` from the `SUPABASE_URL` / `SUPABASE_ANON_KEY` repo secrets
    (leave empty for local-demo mode), and publishes `public/`.
+   Live site: https://skywalkingzulu1.github.io/next-byte-hacks-v3/
 2. **Supabase** (serverless backend, optional): in repo Settings → Secrets add
    `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, `SUPABASE_SERVICE_ROLE_KEY`. Run the
    `Deploy Supabase` workflow to push the `pa_requests` schema and deploy the `run-pipeline`
