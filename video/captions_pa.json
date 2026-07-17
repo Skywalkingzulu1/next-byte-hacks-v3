@@ -1,0 +1,22 @@
+[
+  {
+    "start": 0,
+    "end": 3500,
+    "text": "PriorAuthFlow — AI Prior Authorization"
+  },
+  {
+    "start": 4553,
+    "end": 9053,
+    "text": "Paste a chart + CPT code, then run the pipeline"
+  },
+  {
+    "start": 15188,
+    "end": 21188,
+    "text": "5-agent pipeline builds a submit-ready packet"
+  },
+  {
+    "start": 21307,
+    "end": 26807,
+    "text": "Missing data? The safety loop flags it for review"
+  }
+]
