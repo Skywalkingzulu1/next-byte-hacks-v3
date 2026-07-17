@@ -15,7 +15,7 @@ const browser = await puppeteer.launch({
   args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
 });
 const page = await browser.newPage();
-await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
+await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 2 });
 await page.goto(URL, { waitUntil: 'networkidle0' });
 await sleep(800);
 

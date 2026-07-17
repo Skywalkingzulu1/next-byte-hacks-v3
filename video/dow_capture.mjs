@@ -14,7 +14,7 @@ const browser = await puppeteer.launch({
   args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
 });
 const page = await browser.newPage();
-await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
+await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 2 });
 
 async function shot(name, fn) {
   await page.goto(BASE + (fn || ''), { waitUntil: 'networkidle0' });
