@@ -76,5 +76,8 @@ if video.duration > audio.duration:
 video = video.with_audio(audio)
 
 out = p("DoctorsOnWheels-demo.mp4")
-video.write_videofile(out, codec="libx264", audio_codec="aac", fps=30, preset="medium", threads=4)
+video.write_videofile(out, codec="libx264", audio_codec="aac", fps=30,
+                      preset="slow", threads=4,
+                      ffmpeg_params=["-crf", "17", "-pix_fmt", "yuv420p",
+                                     "-b:a", "192k", "-ar", "48000"])
 print("WROTE", out, "duration", round(audio.duration, 1), "s")
