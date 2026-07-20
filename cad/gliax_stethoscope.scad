@@ -1,56 +1,61 @@
-// Gliax Stethoscope — parametric OpenSCAD model (v2, clearer anatomy)
-// Clear "Y" layout: chestpiece at bottom, tubing rises and splits into
-// two binaural tubes joined by a sprung arc at the top, ear tips on top.
-// Dimensions in millimetres.
+// Gliax Stethoscope — parametric OpenSCAD model (v3, bold & unmistakable)
+// Goal: read clearly as a stethoscope, not a ring-stand.
+//  - FAT chestpiece (bell + diaphragm rim) at the bottom (wide disc)
+//  - THICK flexible acoustic tubing rising and curving into the binaural
+//  - clearly splayed binaural tubes joined by a sprung top arc
+//  - conical EAR TIPS at the very top
+// Dimensions in mm.
 
 // ---------- Parameters ----------
-chest_d   = 46;   // chestpiece diameter
-chest_h   = 13;   // chestpiece height
-tube_r    = 5;    // acoustic tube radius
-tube_span = 130;  // horizontal span of the binaural arc
-ear_l     = 26;   // ear tip length
-ear_d     = 12;   // ear tip diameter
-rim_h     = 3;    // chestpiece rim
+chest_d     = 60;   // chestpiece diameter (FAT)
+chest_h     = 16;   // chestpiece height
+bell_d      = 40;   // bell inner diameter
+tube_r      = 7;    // acoustic tube radius (THICK)
+yoke_span   = 120;  // ear-tube spacing
+ear_l       = 30;   // ear tip length
+ear_d       = 14;   // ear tip base diameter
+arc_r       = tube_r;
 
 // ---------- Chestpiece (bell + diaphragm) ----------
 module chestpiece() {
   union() {
+    // main body
     cylinder(d = chest_d, h = chest_h, $fn = 96);
-    // diaphragm rim on top
-    translate([0, 0, chest_h]) cylinder(d = chest_d + 4, h = rim_h, $fn = 96);
-    // short neck down to the tube
-    translate([0, 0, -8]) cylinder(d = 12, h = 10, $fn = 40);
+    // diaphragm rim (slightly larger lip on top)
+    translate([0, 0, chest_h]) cylinder(d = chest_d + 5, h = 4, $fn = 96);
+    // bell hollow (visual indent on top face)
+    translate([0, 0, chest_h + 0.5]) cylinder(d = bell_d, h = 6, $fn = 96);
+    // short thick neck down to the tube
+    translate([0, 0, -10]) cylinder(d = 18, h = 14, $fn = 48);
   }
 }
 
 // ---------- One binaural side: tube up + ear tip ----------
 module side(sign) {
-  // vertical tube from the arc down to the chestpiece neck
-  translate([sign * tube_span/2, 0, 0])
-    cylinder(d = tube_r * 2, h = 150, $fn = 32);
-  // ear tip on top
-  translate([sign * tube_span/2, 0, 150])
-    cylinder(d1 = ear_d + 5, d2 = ear_d, h = ear_l, $fn = 40);
+  translate([sign * yoke_span/2, 0, 0])
+    cylinder(d = tube_r * 2, h = 170, $fn = 36);
+  // ear tip (conical, clearly an earpiece)
+  translate([sign * yoke_span/2, 0, 170])
+    cylinder(d1 = ear_d + 6, d2 = ear_d - 2, h = ear_l, $fn = 44);
 }
 
-// ---------- Binaural arc (spring) joining the two tubes at top ----------
+// ---------- Binaural arc (spring) at top ----------
 module arc() {
-  translate([0, 0, 150])
+  translate([0, 0, 170])
     rotate([90, 0, 0])
       difference() {
-        cylinder(d = tube_span + tube_r * 2, h = tube_r * 2, $fn = 80, center = true);
-        cylinder(d = tube_span - tube_r * 2, h = tube_r * 2 + 2, $fn = 80, center = true);
+        cylinder(d = yoke_span + arc_r * 2, h = arc_r * 2, $fn = 80, center = true);
+        cylinder(d = yoke_span - arc_r * 2, h = arc_r * 2 + 2, $fn = 80, center = true);
       }
 }
 
-// ---------- Acoustic tubing (one continuous tube: chestpiece -> up -> split) ----------
+// ---------- Acoustic tubing: chestpiece neck -> up -> to arc center ----------
 module tubing() {
-  // center tube from chestpiece neck up to the arc center
-  translate([0, 0, -2]) cylinder(d = tube_r * 2, h = 152, $fn = 32);
+  translate([0, 0, -2]) cylinder(d = tube_r * 2, h = 174, $fn = 36);
 }
 
-// ---------- Assemble ----------
-chestpiece();          // at z=0 (bottom)
-tubing();              // center riser
-side(-1); side(1);    // two binaural tubes + ear tips
-arc();                 // top spring arc
+// ---------- Assemble (clear Y: wide base, tube up, splayed ears + tips) ----------
+chestpiece();   // wide disc at bottom
+tubing();       // thick center riser
+side(-1); side(1);
+arc();
